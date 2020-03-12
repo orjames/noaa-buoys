@@ -1,0 +1,68 @@
+import React from 'react';
+import './App.css';
+import { useState } from "react";
+
+const BASE_API_URL =
+  "https://cors-anywhere.herokuapp.com/https://www.ndbc.noaa.gov/data/realtime2/";
+
+export default function App() {
+  const [sid, setSid] = useState<number>(46026);
+  const [numberWaves, setNumberWaves] = useState<number>(0);
+
+  //  n highest waves given a station ID sid and a number of waves n
+  // n highest waves in the dataset for the given sid
+
+  const formSubmit = () => {
+    setSid(46026)
+    console.log('form submit')
+    console.log(
+      `${BASE_API_URL}${sid}.txt` ===
+        "https://cors-anywhere.herokuapp.com/https://www.ndbc.noaa.gov/data/realtime2/46026.txt"
+    );
+    fetch('https://cors-anywhere.herokuapp.com/https://www.ndbc.noaa.gov/data/realtime2/48400.txt')
+      .then(response => {
+        console.log("in response", response);
+        // not json so don't .json()
+        return response;
+      })
+      .then(data => {
+        console.log('numberWaves:', numberWaves)
+        console.log(data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  // const mapData = (data: []) => {
+  //   return data.map(wave => {
+  //     return (
+  //       <li>{wave}</li>
+  //     )
+  //   })
+  // }
+
+  return (
+    <div className="App">
+      <h1>N highest waves</h1>
+      <form action="" onSubmit={() => formSubmit()}>
+        <label htmlFor="sid">buoy id</label>
+        <input
+          type="number"
+          name="sid"
+          placeholder="buoy id..."
+          onChange={e => setSid(parseInt(e.target.value, 10))}
+        />
+        <label htmlFor="numberWaves">number of waves</label>
+        <input
+          type="number"
+          name="numberWaves"
+          placeholder="number of waves..."
+          onChange={e => setNumberWaves(parseInt(e.target.value, 10))}
+        />
+        <button type="submit">search!</button>
+      </form>
+      {/* {mapData(reqResponseMaxWaveData)} */}
+    </div>
+  );
+}

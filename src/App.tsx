@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { useState } from "react";
-import noah from './noah';
 
 const BASE_API_URL1 =
   "https://www.ndbc.noaa.gov/data/realtime2/";
